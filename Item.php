@@ -22,10 +22,6 @@
             $this->tags = $tags;
             $this->on_sale = $onsale ?? false;
             $this->category = $category ?? "none";
-
-            var_dump($tags);
-
-            echo 'WAT' . json_encode($this->tags);
         }
 
         function &__get($name) {
