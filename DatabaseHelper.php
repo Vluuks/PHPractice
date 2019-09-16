@@ -23,7 +23,6 @@
 
         }
 
-
         public static function getInstance() {
             
             if(self::$instance == null) {
@@ -62,12 +61,17 @@
             while ($row = $result->fetch_assoc()) {    
 
                 
-                
-                $item = new Item($row['id'], $row['name'], $row['price'], $row['description']);
+                $item = new Item($row['id'], 
+                                $row['name'], 
+                                $row['inventory'], 
+                                $row['price'], 
+                                $row['description'],
+                                $row['tags'],
+                                $row['onsale'],
+                                $row['category']
+                            );
                 array_push($item_array, $item);
-
-                // echo $item->name;
-                // echo json_encode($item);
+                
             }
 
             echo json_encode($item_array);
