@@ -29,7 +29,8 @@
         }
 
         public function getStringifiedTags() {
-            $string = json_encode($this->tags);
+            $string = trim(json_encode($this->tags), '"');
+            echo $string;
             return $string;
         }
 
@@ -54,9 +55,9 @@
                 'id' => $this->id,
                 'inventory' => $this->inventory,
                 'name' => $this->name,
-                'price' => $this->getPriceEuros(),
+                'price' => $this->price,
                 'description' => $this->description,
-                'tags' => $this->getStringifiedTags(),
+                'tags' => $this->tags,
                 'onSale' => $this->on_sale,
                 'category' => $this->category
             ];

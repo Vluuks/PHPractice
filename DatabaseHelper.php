@@ -65,13 +65,14 @@
                                 $row['inventory'], 
                                 $row['price'], 
                                 $row['description'],
-                                $row['tags'],
+                                unserialize($row['tags']),
                                 $row['onsale'],
                                 $row['category']
                             );
                 array_push($item_array, $item);
 
             }
+
 
             echo json_encode($item_array);
         
@@ -86,7 +87,7 @@
                 echo "Prepare failed: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
             }
 
-            $tags_stringified = $item->getStringifiedTags();
+            $tags_stringified = serialize($item->tags);
             // need to find a way to pass this without it
 
             $test =  '["test", "hoi"]';
