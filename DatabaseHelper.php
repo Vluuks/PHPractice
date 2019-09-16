@@ -87,11 +87,9 @@
             }
 
             $tags_stringified = $item->getStringifiedTags();
-            // var_dump($tags_stringified);
+            // need to find a way to pass this without it failing
 
             $test =  '["test", "hoi"]';
-
-
             $on_sale_int = $item->on_sale ? 1 : 0;
 
             $query->bind_param("siissbs", 

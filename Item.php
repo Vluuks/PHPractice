@@ -39,13 +39,13 @@
 
         public function jsonSerialize() {
 
-            echo $this->getStringifiedTags();
+            // echo $this->getStringifiedTags();
 
             return [
                 'id' => $this->id,
                 'inventory' => $this->inventory,
                 'name' => $this->name,
-                'price' => $this->getPriceEuros(),
+                'price' => $this->price,
                 'description' => $this->description,
                 'tags' => $this->getStringifiedTags(),
                 'onSale' => $this->on_sale,

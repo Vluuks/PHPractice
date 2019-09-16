@@ -1,10 +1,20 @@
 window.onload = function(){
-    things();
+    
+        // ask for php data
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            console.log("request ok" + xmlhttp.responseText);
+            things(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET","test.php",true);
+    xmlhttp.send();
 
     listenForScrolls();
 }
 
-function things() {
+function things(json) {
 
     /*
         The main app/root. This has to be placed under the components? 
@@ -17,7 +27,7 @@ function things() {
             activeTab: 1,
 
             // Data
-            items: itemList,
+            items: JSON.parse(json),
             projects: projectList,
             
             // Search and filter
