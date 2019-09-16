@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vluuks</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <link rel=icon href=favicon.png>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="data.js"></script>
+    <script src="components.js"></script>
+    <script src="helpers.js"></script>
+    <script src="script.js"></script>
+</head>
+
+
+<script type="text/x-template" id="project-template">
+
+    <div class="basic-container project-container">
+
+            <div class="product-img">
+                    <img class="item-image" v-bind:src="image">
+                </div>
+        
+                <div class="product-info">
+                    <p class="project-title">{{ name }}</p>
+                    <p class="item-description"> {{ description}}</p>
+                </div>
+
+                <ul class="tag-list">
+                    <li class="tag" v-for="tag in tags">{{ tag }}</li>
+                </ul>
+        
+    </div>
+
+</script>
+
+<!-- Template for the items inside the shopping cart -->
+<script type="text/x-template" id="cart-template">
+
+    <div>
+
+        <p v-if="itemCount <= 0">Your shopping cart is empty!</p>
+
+        <div v-if="itemCount > 0" class="shopping-cart-list">
+
+            <table v-if=" itemIds.length > 0 " class="shoppingcart-table">
+                <tr>
+                    <th></th> 
+                    <th>Artikel</th>
+                    <th>Stukprijs</th>
+                    <th>Prijs</th>
+                </tr>
+                <tr v-for="id in itemIds">
+                    <td class="shoppingcart-item-amount"> {{ getItemQuantity(id) }} x </td>
+                    <td class="shoppingcart-item-name"> {{ getItemName(id) }} </td>
+                    <td class="shoppingcart-item-price"> {{ getItemPrice(id) }}</td>
+                    <td class="shoppingcart-item-price"> {{ getItemTotalPrice(id) }}</td>
+                </tr>
+            </table>
+
+            <p> Total items: {{ itemCount }}</p> 
+            <p> Total price: {{ getTotalPrice() }} </p>
+            
+            <button class="basic-button" 
+                v-on:click="checkOut()" 
+                :disabled="itemCount <= 0"
+                :class="{ 'disabled-button': itemCount <= 0 }">
+                Checkout
+            </button>
+
+        </div>
+
+    </div>
+</script>
+
+<!-- Template for the items in the "shop" -->
+<script type="text/x-template" id="item-template">
+
+    <div class="basic-container item-container">
+
+        <div class="product-img">
+            <img class="item-image" v-bind:src="image">
+        </div>
+
+        <div class="product-info">
+            <p class="item-title">{{ nameComputed }}</p>
+            <span :class="{ 'out-of-stock': inventory < 1 }">{{ getFormattedPrice() }} {{ stock }}</span> 
+            <span v-show="onSale">{{ sale }}</span>
+            
+            <div class="sub-container-item">
+                <p class="item-description">{{ description }} </p>
+            </div>
+            
+                <ul class="tag-list">
+                    <li class="tag" v-for="tag in tags">{{ tag }}</li>
+                </ul>
+            
+
+            <button class="basic-button" 
+                    v-on:click="addToCart()" 
+                    :disabled="inventory <= 0 || virtualInventory <= 0"
+                    :class="{ 'disabled-button': inventory <= 0 || virtualInventory <= 0 }">
+                    Add to cart
+            </button>
+        </div>
+    </div>
+
+</script>
+
+
+<body>
+
+    <div id="header">
+        <a href="index.html"><img src="vluuks.png" id="header-image"></a>
+    </div>
+
+    <div id="app" class="flex-container flex-horizontal">
+        
+        <div id="nav-bar-container">
+
+            <img id="small-header" style="opacity : 0" src="vluuks-small.png"></img>
+
+            <div id="nav-bar" class="basic-container">
+                <div class="tabs">
+                    <a v-on:click="activeTab=1" v-bind:class="[ activeTab === 1 ? 'active' : '' ]">HOME</a>
+                    <a v-on:click="activeTab=2" v-bind:class="[ activeTab === 2 ? 'active' : '' ]">PROJECTS</a>
+                    <a v-on:click="activeTab=3" v-bind:class="[ activeTab === 3 ? 'active' : '' ]">SHOP</a>
+                    <a v-on:click="activeTab=4" v-bind:class="[ activeTab === 4 ? 'active' : '' ]">CONTACT</a>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="activeTab === 1" class="tabcontent">
+            
+            <div class="" >
+
+                <div id="main-about">
+
+                    <div class="basic-container about-text">
+                        <h2>ABOUT</h2>
+
+                        <p class="container-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+
+                    <div class="basic-container about-text">
+                        <h2>WAT LEUK</h2>
+
+                        <p class="container-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div id="images-about" class="scrollable flex-container flex-container-wrap">
+                    <div class="image-about-container basic-container">
+                        <img src="About/renshoofd.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/tas.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/huis.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/cactus.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/pc.jpg" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/cosplay.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/cap.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/diemen.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/bruunsk.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/plant.jpg" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/naai.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/minor.jpg" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/worteltek.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/mp.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/mok.jpg" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/pannenkoek.jpg" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/cos2.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/rens.png" class="about-image"></img>
+                    </div> 
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/devfest.png" class="about-image"></img>
+                    </div> 
+                    
+                    <div class="image-about-container basic-container">
+                        <img src="About/dnd.png" class="about-image"></img>
+                    </div>
+
+                    <div class="image-about-container basic-container">
+                        <img src="About/wortels.jpeg" class="about-image"></img>
+                    </div>
+
+                </div>
+
+            </div>
+            
+        </div>
+
+        <div v-if="activeTab === 2" class="tabcontent">
+
+            <div id="filter-bar" class="basic-container sticky">
+                
+                <select v-model="categoryProj">
+                    <option value="all">All</option>
+                    <option value="programming">Code</option>
+                    <option value="academic">Academics & Education</option>
+                    <option value="art">Art & Crafts</option>
+                    <option value="digital">Digital</option>
+                </select> 
+
+                <input id="search-input-proj" v-model="searchProj" type="text" placeholder="search"> 
+
+            </div>
+
+            <div class="flex-container-wrap flex-horizontal">
+
+                <!-- Key ook binden is nodig bij components in een loop? -->
+                <project
+                    v-for="(project, index) in filteredProjects" 
+                    v-bind:key="project.id" 
+                    v-bind:project-item="project" >       
+                </project>
+            </div>
+
+        </div>
+        
+        <div v-if="activeTab === 3" class="tabcontent">
+
+            <div id="filter-bar" class="basic-container sticky">
+                
+                <select v-model="category">
+                    <option value="all">Alles</option>
+                    <option value="nature">Natuur</option>
+                    <option value="knoeps">Knoepen</option>
+                </select> 
+
+                <input id="search-input" v-model="search" type="text" placeholder="search"> 
+
+                <div id="shopping-cart">
+
+                    <div id="shopping-cart-popup" class="sticky cart-container" :class="{ 'hidden': !cartOpen }">
+                        <shoppingcart :item-count="itemCount" :item-list="items" :cart-items="cartItems" ></shoppingcart>
+                    </div>
+
+                    <div id="shopping-counter" v-on:click="toggleShoppingCart()">
+                            <img src="favicon.png">
+                            <p>Winkelmand ({{ itemCount }})</p> 
+                    </div>
+                    
+                
+                </div>
+            </div>
+
+            <div class="flex-container-wrap flex-horizontal">
+
+                <!-- Key ook binden is nodig bij components in een loop? -->
+                <product 
+                    v-for="(item, index) in filteredItems" 
+                    v-bind:key="item.id" 
+                    v-bind:item="item" 
+                    v-bind:premium="premium" 
+                    @add-to-cart="updateCart">
+                
+                </product>
+            </div>
+        </div>
+
+        <div v-if="activeTab === 4" class="tabcontent">
+                <div class="basic-container">
+                    <h2>CONTACT</h2>
+
+                    <p class="container-text">
+                        Dit is de contactpagina, super leuk en boeiend. Jaja.
+                    </p>
+
+                </div>
+            </div>
+
+    </div>
+
+
+ 
+
+
+
+    
+</body>
+</html>
