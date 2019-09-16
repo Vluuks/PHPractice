@@ -1,32 +1,36 @@
 <?php
 
-    class Item {
+    class Item implements JsonSerializable {
 
         protected $id;
         protected $name;
         protected $price;
         protected $description;
 
-        // function __construct($id, $name, $price, $description) {
-        //     // echo "call constructor";
-        //     $this->id = $id;
-        //     $this->name = $name;
-        //     $this->price = $price;
-        //     $this->description = $description;
-        // }
-
-        function __construct($name, $price, $description) {
-            // echo "call constructor";
-            // $this->id = $id;
+        function __construct($id, $name, $price, $description) {
+            $this->id = $id;
             $this->name = $name;
             $this->price = $price;
             $this->description = $description;
         }
 
         function &__get($name) {
-            // echo "asking property";
             return $this->$name;
         }
+
+        private function getPriceEuros() {
+            return "€" . $this->price;
+        }
+
+        public function jsonSerialize() {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'price' => $this->getPriceEuros(),
+                'description' => $this->description
+            ];
+        }
+
     }
 
 ?>

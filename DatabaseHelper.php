@@ -58,16 +58,20 @@
                 exit;
             }
           
-            //output data in HTML table 
-            echo "<table>\n"; 
-            while ($row = $result->fetch_assoc()) {     
-                echo "  <tr>\n";
-                echo "    <td>" . $row['id'] . "</td>\n";
-                echo "    <td>" . $row['name'] . "</td>\n";
-                echo "    <td>" . $row['price'] . "</td>\n";
-                echo "  </tr>\n"; 
+            $item_array = [];
+            while ($row = $result->fetch_assoc()) {    
+
+                
+                
+                $item = new Item($row['id'], $row['name'], $row['price'], $row['description']);
+                array_push($item_array, $item);
+
+                // echo $item->name;
+                // echo json_encode($item);
             }
-            echo "</table>"; 
+
+            echo json_encode($item_array);
+        
         }
 
 

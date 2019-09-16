@@ -8,8 +8,8 @@
 
     $testdb = DatabaseHelper::getInstance();
 
-    $testdb->insert(new Item("Kakuro", 300, "een grote knoep"));
-    $testdb->insert(new Item("Vluuks", 300, "de kleinste knoep"));
+    $testdb->insert(new Item(null, "Bloemp", 300, "nu met bolletjes"));
+    $testdb->insert(new Item(null, "Ranja", 300, "mooi oranje!!"));
 
     $testdb->selectAll();
 
