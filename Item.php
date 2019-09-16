@@ -33,6 +33,15 @@
             return $string;
         }
 
+        public function parseTags() {
+            
+            $string = "";
+            foreach($this->tags as $tag) {
+                $string .= $tag . ",";
+            }
+            return $string;
+        }
+
         private function getPriceEuros() {
             return "€" . $this->price;
         }
@@ -45,7 +54,7 @@
                 'id' => $this->id,
                 'inventory' => $this->inventory,
                 'name' => $this->name,
-                'price' => $this->price,
+                'price' => $this->getPriceEuros(),
                 'description' => $this->description,
                 'tags' => $this->getStringifiedTags(),
                 'onSale' => $this->on_sale,

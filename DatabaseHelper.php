@@ -87,7 +87,7 @@
             }
 
             $tags_stringified = $item->getStringifiedTags();
-            // need to find a way to pass this without it failing
+            // need to find a way to pass this without it
 
             $test =  '["test", "hoi"]';
             $on_sale_int = $item->on_sale ? 1 : 0;
@@ -97,7 +97,7 @@
                                     $item->inventory, 
                                     $item->price, 
                                     $item->description,
-                                    $test,
+                                    $tags_stringified,
                                     $item->on_sale_int,
                                     $item->category   
                                 );
