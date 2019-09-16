@@ -5,6 +5,8 @@
         protected $id;
         protected $name;
         protected $price;
+        protected $inventory;
+
         protected $description;
         protected $tags;
         protected $on_sale;
@@ -17,13 +19,22 @@
             $this->price = $price;
 
             $this->description = $description;
-            $this->tags = $tags ?? ['test', 'test'];
+            $this->tags = $tags;
             $this->on_sale = $onsale ?? false;
-            $this->category = $category ?? "none"
+            $this->category = $category ?? "none";
+
+            var_dump($tags);
+
+            echo 'WAT' . json_encode($this->tags);
         }
 
         function &__get($name) {
             return $this->$name;
+        }
+
+        public function getStringifiedTags() {
+            $string = json_encode($this->tags);
+            return $string;
         }
 
         private function getPriceEuros() {
@@ -31,13 +42,16 @@
         }
 
         public function jsonSerialize() {
+
+            echo $this->getStringifiedTags();
+
             return [
                 'id' => $this->id,
-                'inventory', => $this->inventory,
+                'inventory' => $this->inventory,
                 'name' => $this->name,
                 'price' => $this->getPriceEuros(),
                 'description' => $this->description,
-                'tags' => $this->tags,
+                'tags' => $this->getStringifiedTags(),
                 'onSale' => $this->on_sale,
                 'category' => $this->category
             ];

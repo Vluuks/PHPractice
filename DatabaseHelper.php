@@ -60,7 +60,6 @@
             $item_array = [];
             while ($row = $result->fetch_assoc()) {    
 
-                
                 $item = new Item($row['id'], 
                                 $row['name'], 
                                 $row['inventory'], 
@@ -71,7 +70,7 @@
                                 $row['category']
                             );
                 array_push($item_array, $item);
-                
+
             }
 
             echo json_encode($item_array);
@@ -81,14 +80,29 @@
 
         public function insert($item) {
 
-            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME . " (name, price, description) VALUES (?, ?, ?)");
+            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME . " (name, inventory, price, description, tags, onsale, category) VALUES (?, ?, ?, ?, ?, ?, ?)");
             
+            var_dump($query);
+
             if (!$query) {
                 echo "Prepare failed: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
             }
 
-            $query->bind_param("sis", $item->name, $item->price, $item->description);
-            $query->execute();
+            $tags_stringified = $item->getStringifiedTags();
+            var_dump($tags_stringified);
+
+            $on_sale_int = $item->on_sale ? 1 : 0;
+
+            $query->bind_param("siissbs", 
+                                    $item->name, 
+                                    $item->inventory, 
+                                    $item->price, 
+                                    $item->description,
+                                    $item->tags_stringified,
+                                    $item->on_sale_int,
+                                    $item->category   
+                                );
+            echo $query->execute();
         }
 
 
