@@ -102,6 +102,14 @@
                                 );
             $query->execute();
         }
+
+
+        public function addUser($username, $password) {
+
+
+            
+        }
+
     }
 
 
