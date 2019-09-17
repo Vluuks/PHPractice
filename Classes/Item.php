@@ -31,7 +31,6 @@
 
         public function getStringifiedTags() {
             $string = trim(json_encode($this->tags), '"');
-            echo $string;
             return $string;
         }
 
