@@ -18,9 +18,11 @@
             $this->inventory = $inventory;
             $this->price = $price;
 
+            echo $on_sale;
+
             $this->description = $description;
             $this->tags = $tags;
-            $this->on_sale = $onsale ?? false;
+            $this->on_sale = $on_sale;
             $this->category = $category ?? "none";
             $this->image = $image ?? "Images/placeholder.png";
         }

@@ -5,7 +5,7 @@
 
     echo("test");
 
-    echo $_POST["on_sale"];
+    echo isset($_POST["on_sale"]);
 
     $testdb = DatabaseHelper::getInstance();
 
@@ -16,7 +16,7 @@
         $_POST["price"],
         $_POST["description"],
         array($_POST["tags"]),
-        $_POST["on_sale"],
+        isset($_POST["on_sale"]),
         $_POST["category"],
         $_POST["image"]
     );

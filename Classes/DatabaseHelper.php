@@ -70,6 +70,8 @@
                                 $row['category'],
                                 $row['image']
                             );
+
+                echo "onsale from db" . $row['onsale'] . "zit hier iets in";
                 array_push($item_array, $item);
 
             }
