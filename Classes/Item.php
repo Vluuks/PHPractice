@@ -12,7 +12,7 @@
         protected $on_sale;
         protected $category;
 
-        function __construct($id, $name, $inventory, $price, $description, $tags, $on_sale, $category) {
+        function __construct($id, $name, $inventory, $price, $description, $tags, $on_sale, $category, $image) {
             $this->id = $id;
             $this->name = $name;
             $this->inventory = $inventory;
@@ -22,6 +22,7 @@
             $this->tags = $tags;
             $this->on_sale = $onsale ?? false;
             $this->category = $category ?? "none";
+            $this->image = $image ?? "Images/placeholder.png";
         }
 
         function &__get($name) {
@@ -49,8 +50,6 @@
 
         public function jsonSerialize() {
 
-            // echo $this->getStringifiedTags();
-
             return [
                 'id' => $this->id,
                 'inventory' => $this->inventory,
@@ -59,7 +58,8 @@
                 'description' => $this->description,
                 'tags' => $this->tags,
                 'onSale' => $this->on_sale,
-                'category' => $this->category
+                'category' => $this->category,
+                'image' => $this->image
             ];
         }
 

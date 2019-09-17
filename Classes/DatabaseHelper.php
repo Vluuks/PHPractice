@@ -67,7 +67,8 @@
                                 $row['description'],
                                 unserialize($row['tags']),
                                 $row['onsale'],
-                                $row['category']
+                                $row['category'],
+                                $row['image']
                             );
                 array_push($item_array, $item);
 
@@ -81,7 +82,7 @@
 
         public function insert($item) {
 
-            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME . " (name, inventory, price, description, tags, onsale, category) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME . " (name, inventory, price, description, tags, onsale, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             
             if (!$query) {
                 echo "Prepare failed: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
@@ -93,14 +94,15 @@
             $test =  '["test", "hoi"]';
             $on_sale_int = $item->on_sale ? 1 : 0;
 
-            $query->bind_param("siissbs", 
+            $query->bind_param("siissbss", 
                                     $item->name, 
                                     $item->inventory, 
                                     $item->price, 
                                     $item->description,
                                     $tags_stringified,
                                     $item->on_sale_int,
-                                    $item->category   
+                                    $item->category,
+                                    $item->image   
                                 );
             $query->execute();
         }
