@@ -101,13 +101,27 @@
                                     $item->image   
                                 );
             $query->execute();
+
+            $query->close();
+            $this->mysqli->close();
+
         }
 
 
+        public function checkNameAvailability($username) {
+
+        }
+
         public function addUser($username, $password) {
 
+            $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ss", $username, $password);
+            $stmt->execute();
+    
+            $stmt->close();
+            $this->mysqli->close();
 
-            
         }
 
     }
