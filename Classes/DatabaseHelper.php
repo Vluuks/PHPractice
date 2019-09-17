@@ -11,7 +11,10 @@
         private static $instance = null;
         private $mysqli = null;
 
-        private function __construct() {
+        private final function __clone() {}
+        private final function __wakeup() {}
+
+        private final function __construct() {
             $this->mysqli = new mysqli('localhost', USERNAME, PASSWORD, DB_NAME);
 
             if ($this->mysqli->connect_errno) {
@@ -23,7 +26,7 @@
 
         }
 
-        public static function getInstance() {
+        public final static function getInstance() {
             
             if(self::$instance == null) {
                 self::$instance = new DatabaseHelper();
