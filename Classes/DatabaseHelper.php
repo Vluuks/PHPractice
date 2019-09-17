@@ -91,18 +91,14 @@
             }
 
             $tags_stringified = serialize($item->tags);
-            // need to find a way to pass this without it
 
-            $test =  '["test", "hoi"]';
-            $on_sale_int = $item->on_sale ? 1 : 0;
-
-            $query->bind_param("siissbss", 
+            $query->bind_param("siississ", 
                                     $item->name, 
                                     $item->inventory, 
                                     $item->price, 
                                     $item->description,
                                     $tags_stringified,
-                                    $item->on_sale_int,
+                                    $item->on_sale,
                                     $item->category,
                                     $item->image   
                                 );

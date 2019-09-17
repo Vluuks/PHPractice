@@ -21,6 +21,8 @@
         $_POST["image"]
     );
 
+    var_dump($item);
+
     $testdb->insert($item);
     $testdb->selectAll();
 
