@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vluuks</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles.css" />
+    <link rel=icon href=favicon.png>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="Scripts/script.js"></script>
+</head>
+
+<body>
+
+    <div id="header">
+        <a href="index.html"><img src="../vluuks.png" id="header-image"></a>
+    </div>
+
+    <div id="app_admin" class="flex-container flex-horizontal">
+        
+        <div id="nav-bar-container">
+
+            <img id="small-header" style="opacity : 0" src="../vluuks-small.png"></img>
+
+            <div id="nav-bar" class="basic-container">
+                <div class="tabs">
+                    <a v-on:click="activeTab=1" v-bind:class="[ activeTab === 1 ? 'active' : '' ]">HOME</a>
+                    <a v-on:click="activeTab=2" v-bind:class="[ activeTab === 2 ? 'active' : '' ]">ADD ITEM</a>
+                    <a v-on:click="activeTab=3" v-bind:class="[ activeTab === 3 ? 'active' : '' ]">SHOP</a>
+                    <a v-on:click="activeTab=4" v-bind:class="[ activeTab === 4 ? 'active' : '' ]">CONTACT</a>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="activeTab === 1" class="tabcontent">
+            
+            <div class="" >
+
+                <div id="main-about">
+
+                    <div class="basic-container about-text">
+                        <h2>ABOUT</h2>
+
+                        <p class="container-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+
+                    <div class="basic-container about-text">
+                        <h2>WAT LEUK</h2>
+
+                        <p class="container-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+
+                </div>
+            
+            </div>
+
+        </div>
+
+        <div v-if="activeTab === 2" class="tabcontent">
+
+            <form action="add_item.php" method="post">
+                Name: <input type="text" name="name"><br>
+                Description: <input type="text" name="description"><br>
+                Price: <input type="number" name="price"><br>
+                Inventory: <input type="number" name="inventory"><br>
+                <div><input type="checkbox" id="onsale" name="on_sale"> <label for="onsale">On Sale</label></div><br>
+                Tags: <input type="text" name="tags"><br>
+                Category: <input type="text" name="category"><br>
+                Image: <input type="text" name="image"><br>
+                <input type="submit">
+            </form>
+
+        </div>
+        
+        <div v-if="activeTab === 3" class="tabcontent">
+
+        </div>
+
+        <div v-if="activeTab === 4" class="tabcontent">
+                <div class="basic-container">
+                    <h2>CONTACT</h2>
+
+                    <p class="container-text">
+                        Dit is de contactpagina, super leuk en boeiend. Jaja.
+                    </p>
+
+                </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

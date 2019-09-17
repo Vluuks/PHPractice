@@ -71,11 +71,9 @@
                                 $row['image']
                             );
 
-                echo "onsale from db" . $row['onsale'] . "zit hier iets in";
                 array_push($item_array, $item);
 
             }
-
 
             echo json_encode($item_array);
         
@@ -104,9 +102,6 @@
                                 );
             $query->execute();
         }
-
-
-
     }
 
 

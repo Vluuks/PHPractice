@@ -5,8 +5,6 @@
 
     $testdb = DatabaseHelper::getInstance();
 
-    // echo explo/de($_POST("tags"));
-
     $item = new Item(
         null,
         $_POST["name"],

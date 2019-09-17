@@ -18,8 +18,6 @@
             $this->inventory = $inventory;
             $this->price = $price;
 
-            echo $on_sale;
-
             $this->description = $description;
             $this->tags = $tags;
             $this->on_sale = $on_sale;
@@ -58,9 +56,9 @@
                 'price' => $this->price,
                 'description' => $this->description,
                 'tags' => $this->tags,
-                'onSale' => $this->on_sale,
+                'onSale' => $this->on_sale ? 1 : 0,
                 'category' => $this->category,
-                'image' => $this->image
+                'image' => "Images/" . $this->image
             ];
         }
 
