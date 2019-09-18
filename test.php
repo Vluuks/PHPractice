@@ -1,8 +1,8 @@
 <?php
 // Display greeting message
 
-    require("Classes/DatabaseHelper.php");
-    require("Classes/Item.php");
+    require_once("Classes/DatabaseHelper.php");
+    require_once("Classes/Types.php");
 
     // echo "Hello, world!";
 
@@ -12,6 +12,6 @@
     // $tags = array("test tag", "waarom is dit zo raar");
     // $testdb->insert(new Item(null, "Test", 200, 640, "een baby dobbel", $tags, null, "nature", null));
 
-    $testdb->selectAll();
+    $testdb->selectAll(Types::Project);
 
 ?>

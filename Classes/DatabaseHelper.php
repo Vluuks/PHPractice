@@ -5,8 +5,13 @@
     define("TABLE_NAME_PROJECTS", "projects_table");
 
     require_once("DatabaseCredentials.php");
+
+
+    // Models and enumerations
+    require_once("Types.php");
     require_once("User.php");
     require_once("Project.php");
+    require_once("Item.php");
 
 
     class DatabaseHelper {
@@ -40,12 +45,26 @@
 
 
         /* 
-            Returns all data from the items table. 
+            Returns all data from the items or projects table, depending on argument supplied.
+            This would probably still be better as separate methods, however I wanted to see whether
+            it could be done without being overly clunky. 
         */
-        public function selectAll() {
+        public function selectAll($type) {
 
-            $sql = 'SELECT * FROM ' . TABLE_NAME_ITEMS;
+            $sql;
+            // perhaps derive directly from param?
+            switch($type) {
 
+                case Types::Item:
+                    $sql = 'SELECT * FROM ' . TABLE_NAME_ITEMS;
+                    break;
+                case Types::Project:
+                    $sql = 'SELECT * FROM ' . TABLE_NAME_PROJECTS;
+                    break;
+                default:
+                   $sql = 'SELECT * FROM ' . TABLE_NAME_ITEMS;
+            }
+           
             // run the query 
             $result = $this->mysqli->query($sql);
             if (!$result) {
@@ -64,25 +83,49 @@
                 exit;
             }
           
-            $item_array = [];
-            while ($row = $result->fetch_assoc()) {    
+            $row_array = [];
 
-                $item = new Item($row['id'], 
-                                $row['name'], 
-                                $row['inventory'], 
-                                $row['price'], 
-                                $row['description'],
-                                unserialize($row['tags']),
-                                $row['onsale'],
-                                $row['category'],
-                                $row['image']
-                            );
+            switch($type) {
 
-                array_push($item_array, $item);
+                case Types::Item:
+                    while ($row = $result->fetch_assoc()) {    
 
+                        $item = new Item($row['id'], 
+                                        $row['name'], 
+                                        $row['inventory'], 
+                                        $row['price'], 
+                                        $row['description'],
+                                        unserialize($row['tags']),
+                                        $row['onsale'],
+                                        $row['category'],
+                                        $row['image']
+                                    );
+        
+                        array_push($row_array, $item);
+        
+                    }
+                    break;
+                
+                case Types::Project:
+                    while ($row = $result->fetch_assoc()) {    
+
+                        $project = new project($row['id'], 
+                                        $row['name'], 
+                                        $row['description'],
+                                        unserialize($row['tags']),
+                                        $row['category'],
+                                        $row['image']
+                                    );
+        
+                        array_push($row_array, $project);
+        
+                    }
+                    break;
             }
+            
 
-            echo json_encode($item_array);
+            // Final result parsed to json
+            echo json_encode($row_array);
         
         }
 
