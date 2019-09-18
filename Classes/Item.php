@@ -29,19 +29,19 @@
             return $this->$name;
         }
 
-        public function getStringifiedTags() {
-            $string = trim(json_encode($this->tags), '"');
-            return $string;
-        }
+        // public function getStringifiedTags() {
+        //     $string = trim(json_encode($this->tags), '"');
+        //     return $string;
+        // }
 
-        public function parseTags() {
+        // public function parseTags() {
             
-            $string = "";
-            foreach($this->tags as $tag) {
-                $string .= $tag . ",";
-            }
-            return $string;
-        }
+        //     $string = "";
+        //     foreach($this->tags as $tag) {
+        //         $string .= $tag . ",";
+        //     }
+        //     return $string;
+        // }
 
         private function getPriceEuros() {
             return "€" . $this->price;
