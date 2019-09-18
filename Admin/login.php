@@ -1,9 +1,14 @@
 <?php
 
     require_once("../Classes/DatabaseHelper.php");
+    require_once("../Classes/User.php");
 
     // If already logged in
     session_start();
+
+    echo "salsfafaf";
+    echo isset($_SESSION["logged_in"]);
+
     if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true) {
         echo "You are already logged in";
         exit;
@@ -24,11 +29,10 @@
             $user = $db_helper->verifyUser($username, $password);
 
             if($user != null) {
-                
                 session_start();
                 $_SESSION["logged_in"] = true;
-                $_SESSION["id"] = $id;
-                $_SESSION["username"] = $username;  
+                $_SESSION["id"] = $user->id;
+                $_SESSION["username"] = $user->username;  
             }
         
         }

@@ -3,7 +3,8 @@
     define("DB_NAME", "vluuks_db");
     define("TABLE_NAME", "test_table");
 
-    require("DatabaseCredentials.php");
+    require_once("DatabaseCredentials.php");
+    require_once("../Classes/User.php");
 
 
     class DatabaseHelper {
@@ -156,9 +157,12 @@
                     if(password_verify($password, $hashed_password)) {
                             // Password is correct, so start a new session
                             echo "password match";
+                            $user = new User($id, $username);
+                            return $user;
                     }
                     else {
                         echo "This account or account/password combination does not exist.";
+                        return; // explicitly returning null is not needed? but perhaps safer?
                     }
                 }
             }
