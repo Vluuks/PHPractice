@@ -1,7 +1,7 @@
 <?php
 
-    require("../Classes/DatabaseHelper.php");
-    require("../Classes/Item.php");
+    require_once("../Classes/DatabaseHelper.php");
+    require_once("../Classes/Item.php");
 
     session_start();
 
@@ -28,7 +28,6 @@
         );
 
         $testdb->insert($item);
-        // $testdb->selectAll();
     
     }
 

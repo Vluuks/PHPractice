@@ -1,7 +1,7 @@
 <?php
 
-    require("../Classes/DatabaseHelper.php");
-    require("../Classes/Project.php");
+    require_once("../Classes/DatabaseHelper.php");
+    require_once("../Classes/Project.php");
 
     session_start();
 

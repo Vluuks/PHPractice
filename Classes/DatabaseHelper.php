@@ -1,10 +1,12 @@
 <?php 
 
     define("DB_NAME", "vluuks_db");
-    define("TABLE_NAME", "test_table");
+    define("TABLE_NAME_ITEMS", "test_table");
+    define("TABLE_NAME_PROJECTS", "projects_table");
 
     require_once("DatabaseCredentials.php");
     require_once("User.php");
+    require_once("Project.php");
 
 
     class DatabaseHelper {
@@ -42,7 +44,7 @@
         */
         public function selectAll() {
 
-            $sql = 'SELECT * FROM ' . TABLE_NAME;
+            $sql = 'SELECT * FROM ' . TABLE_NAME_ITEMS;
 
             // run the query 
             $result = $this->mysqli->query($sql);
@@ -90,7 +92,7 @@
         */
         public function insert($item) {
 
-            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME . " (name, inventory, price, description, tags, onsale, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME_ITEMS . " (name, inventory, price, description, tags, onsale, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             
             if (!$query) {
                 echo "Prepare failed: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
@@ -113,6 +115,29 @@
             $query->close();
             $this->mysqli->close();
 
+        }
+
+        public function insertProject($project) {
+            
+            $query = $this->mysqli->prepare("INSERT INTO " . TABLE_NAME_PROJECTS . " (name, description, tags, category, image) VALUES (?, ?, ?, ?, ?)");
+            
+            if (!$query) {
+                echo "Prepare failed: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+            }
+
+            $tags_stringified = serialize($project->tags);
+
+            $query->bind_param("sssss", 
+                                    $project->name, 
+                                    $project->description,
+                                    $tags_stringified,
+                                    $project->category,
+                                    $project->image   
+                                );
+            $query->execute();
+
+            $query->close();
+            $this->mysqli->close();
         }
 
         
