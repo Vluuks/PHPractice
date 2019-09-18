@@ -1,16 +1,31 @@
 window.onload = function(){
     
-        // ask for php data
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            console.log("request ok")
-            console.log(xmlhttp.responseText);
-            things(xmlhttp.responseText);
-        }
-    }
-    xmlhttp.open("GET","test.php",true);
-    xmlhttp.send();
+    var promises = [
+
+        request('GET', 'test.php')
+            .then(function (e) {
+                return e.target.response;
+            }, function (e) {
+                return e;
+            }),
+
+        request('GET', 'test_proj.php')
+            .then(function (e) {
+                return e.target.response;
+            }, function (e) {
+                return e;
+            })
+        ];
+
+    Promise.all(promises)
+        .then(
+            function(result) { 
+                things(result);
+            }, 
+            function(error) {
+                console.log(error)
+            });
+
 
     listenForScrolls();
 }
@@ -28,8 +43,8 @@ function things(json) {
             activeTab: 1,
 
             // Data
-            items: JSON.parse(json),
-            projects: projectList,
+            items: JSON.parse(json[0]),
+            projects: JSON.parse(json[1]),
             
             // Search and filter
             search: "",

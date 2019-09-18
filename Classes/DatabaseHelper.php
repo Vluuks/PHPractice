@@ -109,7 +109,7 @@
                 case Types::Project:
                     while ($row = $result->fetch_assoc()) {    
 
-                        $project = new project($row['id'], 
+                        $project = new Project($row['id'], 
                                         $row['name'], 
                                         $row['description'],
                                         unserialize($row['tags']),

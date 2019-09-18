@@ -12,6 +12,6 @@
     // $tags = array("test tag", "waarom is dit zo raar");
     // $testdb->insert(new Item(null, "Test", 200, 640, "een baby dobbel", $tags, null, "nature", null));
 
-    $testdb->selectAll(Types::Project);
+    $testdb->selectAll(Types::Item);
 
 ?>

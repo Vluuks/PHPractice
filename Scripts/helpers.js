@@ -1,4 +1,14 @@
 
+function request(method, url) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = resolve;
+        xhr.onerror = reject;
+        xhr.send();
+    });
+}
+
 function matchStringNoCase(source, comparison){
     return source.toUpperCase().match(comparison.toUpperCase());
 }
