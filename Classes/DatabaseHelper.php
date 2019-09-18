@@ -148,7 +148,22 @@
             mysqli_stmt_store_result($stmt);
                 
             if(mysqli_stmt_num_rows($stmt) == 1) {
-                echo "account exists";
+                echo "Account exists - proceed to login";
+
+                mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+                
+                if(mysqli_stmt_fetch($stmt)) {
+                    if(password_verify($password, $hashed_password)) {
+                            // Password is correct, so start a new session
+                            echo "password match";
+                    }
+                    else {
+                        echo "This account or account/password combination does not exist.";
+                    }
+                }
+            }
+            else {
+                echo "This account or account/password combination does not exist.";
             }
     
             $stmt->close();

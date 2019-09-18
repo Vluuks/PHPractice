@@ -24,7 +24,11 @@
             $user = $db_helper->verifyUser($username, $password);
 
             if($user != null) {
-                // is logged in
+                
+                session_start();
+                $_SESSION["logged_in"] = true;
+                $_SESSION["id"] = $id;
+                $_SESSION["username"] = $username;  
             }
         
         }
