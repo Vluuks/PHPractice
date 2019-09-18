@@ -1,6 +1,6 @@
 <?php
 
-    require_once("../Classes/DatabaseHelper");
+    require_once("../Classes/DatabaseHelper.php");
 
     // If already logged in
     session_start();
@@ -10,24 +10,15 @@
     }
 
     // Upon submission
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
     
         // Check if username is empty
-        if(empty(trim($_POST["username"]))){
-            echo "Please enter a username.";
-        } else{
-            $username = trim($_POST["username"]);
-        }
-        
-        // Check if password is empty
-        else if(empty(trim($_POST["password"]))){
-            echo "Please enter a password.";
-        } else{
-            $password = trim($_POST["password"]);
-        }
-        
-        // Contains data
+        if(empty(trim($_POST["username"])) || empty(trim($_POST["password"]))) {
+            echo "Please enter a username and a password.";
+        } 
         else {
+            $username = trim($_POST["username"]);
+            $password = trim($_POST["password"]);
 
             $db_helper = DatabaseHelper::getInstance();
             $user = $db_helper->verifyUser($username, $password);
@@ -41,3 +32,24 @@
 
 
 ?>
+
+
+<html>
+    <body>
+        <div>
+            <h2>Log in</h2>
+            <p>blabnlalablbllasa.</p>
+            
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" value="">
+
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" value="">
+
+                    <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>    
+    </body>
+</html>

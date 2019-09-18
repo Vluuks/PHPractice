@@ -27,18 +27,22 @@
     }
 ?>
 
-<h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+<html>
+    <body>
+        <div>
+            <h2>Sign Up</h2>
+            <p>Please fill this form to create an account.</p>
+            
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" value="">
 
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" value="">
 
-                <input type="submit" class="btn btn-primary" value="Submit">
-        </form>
-    </div>    
-</body>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>    
+    </body>
 </html>

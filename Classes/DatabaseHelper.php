@@ -120,6 +120,7 @@
 
         /*
             Adds a user to the database. 
+            TODO add preparation verification?
         */
         public function addUser($username, $password) {
 
@@ -135,16 +136,22 @@
 
         /*
             Checks whether this combination represents a valid user.
+            TODO add preparation verification?
         */
         public function verifyUser($username, $password) {
 
-            $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+            $sql = "SELECT id, username, password FROM users WHERE username = ?";
             $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("ss", $username, $password);
+            $stmt->bind_param("s", $username);
             $stmt->execute();
+
+            mysqli_stmt_store_result($stmt);
+                
+            if(mysqli_stmt_num_rows($stmt) == 1) {
+                echo "account exists";
+            }
     
             $stmt->close();
-            $this->mysqli->close();
 
         }
 
