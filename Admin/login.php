@@ -28,6 +28,13 @@
         
         // Contains data
         else {
+
+            $db_helper = DatabaseHelper::getInstance();
+            $user = $db_helper->verifyUser($username, $password);
+
+            if($user != null) {
+                // is logged in
+            }
         
         }
     }
