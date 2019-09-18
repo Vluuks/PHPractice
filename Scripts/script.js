@@ -45,7 +45,6 @@ function things(json) {
         },
         methods: {
             updateCart(item) {
-                console.log(item);
 
                 // Sanity check
                 if(item.inventory <= 0) 
@@ -68,7 +67,6 @@ function things(json) {
                 }
 
                 this.itemCount++;
-                console.log(this.cartItems);
 
             },
             toggleShoppingCart() {

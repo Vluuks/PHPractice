@@ -4,7 +4,7 @@
     define("TABLE_NAME", "test_table");
 
     require_once("DatabaseCredentials.php");
-    require_once("../Classes/User.php");
+    require_once("User.php");
 
 
     class DatabaseHelper {
@@ -45,7 +45,8 @@
             $sql = 'SELECT * FROM ' . TABLE_NAME;
 
             // run the query 
-            if (!$result = $this->mysqli->query($sql)) {
+            $result = $this->mysqli->query($sql);
+            if (!$result) {
                 // Handle error
                 echo "Sorry, this website is experiencing problems.";
                 echo "Error: Query failed to execute, here is why: \n";

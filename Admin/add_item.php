@@ -28,7 +28,7 @@
         );
 
         $testdb->insert($item);
-        $testdb->selectAll();
+        // $testdb->selectAll();
     
     }
 
